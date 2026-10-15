@@ -9,7 +9,6 @@ MAX_ITER = 10000
 def print_matrix(name, M, fmt="{:10.4f}"):
     """
     Печатает матрицу M построчно.
-    fmt - формат числа: "{:10.4f}" = 10 символов ширины, 4 знака после точки.
     """
     print(f"{name} =")
     for row in M:
@@ -110,9 +109,9 @@ def to_iterative_form(A, b):
         if A[i][i] == 0:
             raise ValueError(f"Нулевой диагональный элемент a_{i + 1}{i + 1}")
 
-        beta[i] = b[i] / A[i][i]                 # beta_i = b_i / a_ii
+        beta[i] = b[i] / A[i][i]
 
-        for j in range(n):                       # для каждого коэффициента строки
+        for j in range(n): # для каждого коэффициента строки
             if j != i:
                 alpha[i][j] = -A[i][j] / A[i][i] # alpha_ij = -a_ij / a_ii
             # при j == i alpha[i][i] так и остаётся равным 0
@@ -135,11 +134,11 @@ def simple_iterations(A, b, eps):
     """
     # Подготовка
     alpha, beta = to_iterative_form(A, b)
-    n = len(beta)                          # число неизвестных (у нас 4)
-    norm_alpha = mat_norm_c(alpha)         # ||alpha|| = 0.7083 для варианта 26
+    n = len(beta)                          # число неизвестных
+    norm_alpha = mat_norm_c(alpha)         # ||alpha|| = 0.7083
 
     # Оценка ошибки по формуле:
-    #     eps^(k) = ||alpha|| / (1 - ||alpha||) * ||x^(k) - x^(k-1)||.
+    #  eps^(k) = ||alpha|| / (1 - ||alpha||) * ||x^(k) - x^(k-1)||
     # Множитель перед ||x^(k) - x^(k-1)|| не меняется от итерации к итерации,
     # поэтому считаем его один раз заранее
     if norm_alpha < 1:
@@ -150,7 +149,7 @@ def simple_iterations(A, b, eps):
         coef = 1.0
 
     # Начальное приближение x^(0) = beta.
-    # beta[:] - это КОПИЯ списка. Если написать x = beta, то x и beta
+    # beta[:] - это копия списка. Если написать x = beta, то x и beta
     # станут одним и тем же списком, и изменение x испортит beta.
     x = beta[:]
 
